@@ -8,6 +8,16 @@
   {{form.as_p}}
   <button type="submit">search</button>
 </form>
+
+<hr>
+<form method="get" action="">
+	<label for="datestart">Start date:</label>
+	<input type="text" id="datestart" name="datestart"><br><br>
+	<label for="endstart">End date:</label>
+	<input type="text" id="endstart" name="endstart"><br><br>
+	<input type="submit" value="search">
+</form>
+
 <br>
 <table border="1">
 	<caption>Expenses</caption>
@@ -42,8 +52,14 @@
 	{% endfor %}
 	</tbody>
 </table>
-
 {% include "_pagination.html" %}
+
+<form method="get" action="">
+	<label for="sortbycat">Sort by category [ASC/DESC]:</label>
+	<input type="text" id="sortbycat" name="sortbycat"><br><br>
+	<input type="submit" value="sort">
+</form>
+
 <hr>
 <table border="1">
   <caption>Summary per category</caption>
@@ -52,6 +68,45 @@
 	<tr>
 		<td>{{category}}:</td>
 		<td>{{total|floatformat:2}}</td>
+	</tr>
+	{% endfor %}
+  </tr>
+</table>
+
+<hr>
+<table border="1">
+  <caption>Summary per year-month</caption>
+  <tr>
+    {% for year_month, total in summary_per_year_month.items %}
+	<tr>
+		<td>{{year_month}}:</td>
+		<td>{{total|floatformat:2}}</td>
+	</tr>
+	{% endfor %}
+  </tr>
+</table>
+
+<hr>
+<table border="1">
+	<caption>Total amount spent</caption>
+	<tr>
+	{% for total, val in total_amount_spent.items %}
+		<tr>
+		<td>total amount:</td>
+		<td>{{val|floatformat:2}}</td>
+		</tr>
+	{% endfor %}
+	</tr>
+  </table>
+
+<hr>
+<table border="1">
+  <caption>Number of expenses per category</caption>
+  <tr>
+	{% for category, number in number_of_exp_per_category.items %}
+	<tr>
+		<td>{{category}}:</td>
+		<td>{{number}}</td>
 	</tr>
 	{% endfor %}
   </tr>
